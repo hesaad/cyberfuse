@@ -1,0 +1,90 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Incident Chat API",
+    "description": "API for fetching incident-related data via chat interface",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://52.146.92.200:8001"
+    }
+  ],
+  "paths": {
+    "/chat/stream": {
+      "post": {
+        "summary": "Fetch incident data based on user input",
+        "operationId": "fetchIncidents",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "input": {
+                    "type": "object",
+                    "properties": {
+                      "user_id": {
+                        "type": "string",
+                        "example": "221098"
+                      },
+                      "messages": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "human"
+                            },
+                            "content": {
+                              "type": "string",
+                              "example": "List top 2 incidents for the last 24 hrs"
+                            }
+                          },
+                          "required": ["type", "content"]
+                        }
+                      }
+                    },
+                    "required": ["user_id", "messages"]
+                  }
+                },
+                "required": ["input"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with incident data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      }
+    }
+  }
+}
