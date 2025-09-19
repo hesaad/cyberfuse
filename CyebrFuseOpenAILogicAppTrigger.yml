@@ -27,10 +27,6 @@ paths:
                 cyberfuseuserid:
                   type: string
                   description: Cyberfuse session User ID
-              required:
-                - content
-                - cyberfuseserver
-                - cyberfuseuserid
       responses:
         '202':
           description: Actions have been executed and the prompt sent successfully to Cyberfuse
